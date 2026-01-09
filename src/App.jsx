@@ -19,11 +19,15 @@ function App() {
     };
 
     setJobs([...jobs, newJob]);
+
     setCompany('');
     setPosition('');
     setStatus('Applied');
-
   }
+
+     const deleteJob = (id) => {
+      setJobs(jobs.filter((job) => job.id !== id));
+    }
 
 
   return (
@@ -40,7 +44,8 @@ function App() {
       <ul>
         {jobs.map((job)=>(
           <li key={job.id}>
-            {job.company} - {job.position} - {job.status}
+            {job.company} - {job.position} [{job.status}]
+            <button onClick={() => deleteJob(job.id)}>Delete</button>
           </li>
         ))}
       </ul>
