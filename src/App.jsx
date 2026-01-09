@@ -1,14 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import JobList from "./components/JobList";
 
 
 
 function App() {
-  const [jobs, setJobs] = useState([]);
+  const [jobs, setJobs] = useState(() => {
+    const savedJobs = localStorage.getItem("jobs");
+    return savedJobs ? JSON.parse(savedJobs) : [];
+  });
   const [company, setCompany] = useState('');
   const [position, setPosition] = useState('');
   const [status, setStatus] = useState('Applied');
+
+  useEffect(() => {
+    localStorage.setItem("jobs", JSON.stringify(jobs));
+  },[jobs]);
 
   const addJob = () => {
     if (!company || !position) return;
