@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import JobList from "./components/JobList";
+
 
 
 function App() {
@@ -29,7 +31,12 @@ function App() {
       setJobs(jobs.filter((job) => job.id !== id));
     }
 
+    const updateStatus = (id, newStatus) => {
 
+      setJobs(jobs.map((job) => job.id === id ? { ...job, status: newStatus} : job ));
+    };
+
+    
   return (
     <div>
       <h1>Job Tracker</h1>
@@ -41,14 +48,11 @@ function App() {
         <option value="Rejected">Rejected</option>
       </select>
       <button onClick={addJob}>Add Job</button>
-      <ul>
-        {jobs.map((job)=>(
-          <li key={job.id}>
-            {job.company} - {job.position} [{job.status}]
-            <button onClick={() => deleteJob(job.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+       <JobList
+        jobs={jobs}
+        deleteJob={deleteJob}
+        updateStatus={updateStatus}
+      />
     </div>
   );
 }
