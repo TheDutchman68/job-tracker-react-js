@@ -11,11 +11,9 @@ function App() {
   });
   const [company, setCompany] = useState('');
   const [position, setPosition] = useState('');
-  const [status, setStatus] = useState('Applied');
+  const [status, setStatus] = useState('applied');
 
-  useEffect(() => {
-    localStorage.setItem("jobs", JSON.stringify(jobs));
-  },[jobs]);
+  useEffect(() => {localStorage.setItem("jobs", JSON.stringify(jobs));},[jobs]);
 
   const addJob = () => {
     if (!company || !position) return;
@@ -45,23 +43,41 @@ function App() {
 
     
   return (
-    <div>
-      <h1>Job Tracker</h1>
-      <input type="text" placeholder='Company' value={company} onChange={(e) => setCompany(e.target.value)}></input>
-      <input type='text' placeholder='Position' value={position} onChange={(e) => setPosition(e.target.value)}></input>
-      <select value={status} onChange={(e) => setStatus(e.target.value)}>
-        <option value="Applied">Applied</option>
-        <option value="Interview">Interview</option>
-        <option value="Rejected">Rejected</option>
-      </select>
-      <button onClick={addJob}>Add Job</button>
-       <JobList
-        jobs={jobs}
-        deleteJob={deleteJob}
-        updateStatus={updateStatus}
+  <div className="app">
+    <h1>Job Tracker</h1>
+
+    <div className="form">
+      <input
+        type="text"
+        placeholder="Company"
+        value={company}
+        onChange={(e) => setCompany(e.target.value)}
       />
+
+      <input
+        type="text"
+        placeholder="Position"
+        value={position}
+        onChange={(e) => setPosition(e.target.value)}
+      />
+
+      <select value={status} onChange={(e) => setStatus(e.target.value)}>
+        <option value="applied">Applied</option>
+        <option value="interview">Interview</option>
+        <option value="rejected">Rejected</option>
+      </select>
+
+      <button onClick={addJob}>Add Job</button>
     </div>
-  );
+
+    <JobList
+      jobs={jobs}
+      deleteJob={deleteJob}
+      updateStatus={updateStatus}
+    />
+  </div>
+);
+
 }
 
 export default App;
