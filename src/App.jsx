@@ -12,11 +12,15 @@ function App() {
   const [company, setCompany] = useState('');
   const [position, setPosition] = useState('');
   const [status, setStatus] = useState('applied');
+  const [error,setError] = useState('');
 
   useEffect(() => {localStorage.setItem("jobs", JSON.stringify(jobs));},[jobs]);
 
   const addJob = () => {
-    if (!company || !position) return;
+    if (!company.trim() || !position.trim()) {
+      setError('All fields must be completed');
+      return;
+    }
 
     const newJob = {
       id: Date.now(),
@@ -29,7 +33,8 @@ function App() {
 
     setCompany('');
     setPosition('');
-    setStatus('Applied');
+    setStatus('applied');
+    setError('');
   }
 
      const deleteJob = (id) => {
@@ -52,6 +57,7 @@ function App() {
         placeholder="Company"
         value={company}
         onChange={(e) => setCompany(e.target.value)}
+        required
       />
 
       <input
@@ -68,8 +74,9 @@ function App() {
       </select>
 
       <button onClick={addJob}>Add Job</button>
+      
     </div>
-
+    {error && <p className='error'>{error}</p>}
     <JobList
       jobs={jobs}
       deleteJob={deleteJob}
