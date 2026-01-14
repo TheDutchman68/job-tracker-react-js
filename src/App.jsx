@@ -22,7 +22,7 @@ function App() {
 
   const addJob = () => {
     if (!company.trim() || !position.trim()) {
-      setError('All fields must be completed');
+      setError('All fields must be completed!');
       setSuccess('');
       return;
     }
