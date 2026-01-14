@@ -116,14 +116,6 @@ ul {
   .form button {
     width: 100%;
   }
- .job-actions {
-    flex-direction: column;
-    gap: 8px;
-  }
 
-  .job-actions select,
-  .job-actions button {
-    width: 100%;
-  }
   
 }
