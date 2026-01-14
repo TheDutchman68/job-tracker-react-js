@@ -7,7 +7,7 @@ This application helps users keep track of their job applications by adding, upd
 
 ## 🚀 Live Demo
 👉 (optional – add after deploy)  
-https://job-tracker-yourname.vercel.app
+https://job-tracker-react-js-bice.vercel.app
 
 ---
 
@@ -78,6 +78,8 @@ http://localhost:5173
 - Export data to CSV
 
 
+
+
 ## 📸 Screenshots
 
 ### Desktop
@@ -92,6 +94,9 @@ http://localhost:5173
 ![Mobile Screenshot](./screenshots/Mobile1.png)
 ![Mobile Screenshot](./screenshots/Mobile2.png)
 
+## ⚠️ Note 
+- Native form elements may appear slightly different across browsers (Safari vs Chrome), which is expected behavior.
+
 ## 👤 Author
 
 Natanael Dobie
@@ -103,3 +108,5 @@ Frontend Developer (React)
 ## 📄 License
 
 This project is licensed under the MIT License.
+
+
