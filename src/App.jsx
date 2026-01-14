@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import JobList from "./components/JobList";
 
@@ -13,12 +13,17 @@ function App() {
   const [position, setPosition] = useState('');
   const [status, setStatus] = useState('applied');
   const [error,setError] = useState('');
-
+  const [success, setSuccess] = useState('');
+  const companyRef = useRef(null);
   useEffect(() => {localStorage.setItem("jobs", JSON.stringify(jobs));},[jobs]);
+  useEffect(() =>{
+    companyRef.current.focus();
+  },[]);
 
   const addJob = () => {
     if (!company.trim() || !position.trim()) {
       setError('All fields must be completed');
+      setSuccess('');
       return;
     }
 
@@ -35,6 +40,12 @@ function App() {
     setPosition('');
     setStatus('applied');
     setError('');
+    setSuccess('Job added successfully!');
+    companyRef.current.focus();
+
+    setTimeout(() =>{
+      setSuccess('');
+    }, 2000)
   }
 
      const deleteJob = (id) => {
@@ -53,6 +64,7 @@ function App() {
 
     <div className="form">
       <input
+        ref={companyRef}
         type="text"
         placeholder="Company"
         value={company}
@@ -77,6 +89,7 @@ function App() {
       
     </div>
     {error && <p className='error'>{error}</p>}
+    {success && <p className='success'>{success}</p>}
     <JobList
       jobs={jobs}
       deleteJob={deleteJob}
