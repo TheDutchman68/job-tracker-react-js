@@ -6,7 +6,7 @@ This application helps users keep track of their job applications by adding, upd
 ---
 
 ## 🚀 Live Demo
-👉 (optional – add after deploy)  
+
 https://job-tracker-react-js-bice.vercel.app
 
 ---
