@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: system-ui, sans-serif;
   background: #f5f7fa;
@@ -52,6 +56,13 @@ ul {
   padding: 12px;
   margin-bottom: 10px;
   border-radius: 8px;
+  animation: slideFade 0.4s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.job-item.removing {
+  opacity: 0;
+  transform: translateY(-20px);
 }
 
 .job-info {
@@ -79,17 +90,53 @@ ul {
 }
 
 .error{
-  color: red;
+  color: #ff2D00;
   font-weight: bold;
+  width: 100%;
   margin-top: 8px;
+  text-align: center;
+  background-color: #FFACA3;
+  border-radius: 6px;
+  padding: 5px;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+
 }
 
 .success{
-  color: #16a34a;
+  color: #007A0B;
   margin-top: 8px;
   font-weight: bold;
   font-size: large;
+  text-align: center;
+  background-color: #8CFF92;
+  border-radius: 6px;
+  padding: 5px;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  
+}
 
+.error.show,
+.success.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@keyframes slideFade {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Tablet */
@@ -102,6 +149,15 @@ ul {
   .form input, .form select, .form button {
     flex: 1 1 100%;
   }
+
+  .error{
+    text-align: center;
+  }
+
+  .success{
+    text-align: center;
+  }
+  
 }
 
 /* Mobile */
@@ -110,12 +166,10 @@ ul {
   .form{
     flex-direction: column;
   }
-
-   .form input,
-  .form select,
-  .form button {
-    width: 100%;
+  .error{
+    text-align: center;
   }
-
-  
+  .success{
+    text-align: center;
+  }
 }

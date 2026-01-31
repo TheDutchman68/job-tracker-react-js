@@ -1,6 +1,20 @@
+import { useState } from "react";
+
 function JobItem({ job, deleteJob, updateStatus }) {
+
+  const [isRemoving, setIsRemoving] = useState(false);
+
+  const handleDelete = () => {
+    setIsRemoving(true);
+
+    setTimeout(() => {
+      deleteJob(job.id);
+    }, 300)
+  }
+
+
   return (
-    <li className="job-item">
+    <li className={`job-item ${isRemoving ? "removing" : ""}`}>
       <div className="job-info">
         <strong>{job.company}</strong>
         <span>{job.position}</span>
@@ -16,7 +30,7 @@ function JobItem({ job, deleteJob, updateStatus }) {
           <option value="rejected">Rejected</option>
         </select>
 
-        <button onClick={() => deleteJob(job.id)}>
+        <button onClick={handleDelete}>
           Delete
         </button>
       </div>

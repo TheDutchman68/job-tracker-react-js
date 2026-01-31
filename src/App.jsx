@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import JobList from "./components/JobList";
 
 
@@ -14,6 +13,8 @@ function App() {
   const [status, setStatus] = useState('applied');
   const [error,setError] = useState('');
   const [success, setSuccess] = useState('');
+  const errorTimeoutRef = useRef(null);
+  const successTimeoutRef = useRef(null);
   const companyRef = useRef(null);
   useEffect(() => {localStorage.setItem("jobs", JSON.stringify(jobs));},[jobs]);
   useEffect(() =>{
@@ -24,6 +25,12 @@ function App() {
     if (!company.trim() || !position.trim()) {
       setError('All fields must be completed!');
       setSuccess('');
+
+      clearTimeout(errorTimeoutRef.current);
+
+      errorTimeoutRef.current = setTimeout(() => {
+        setError('');
+      },2000);
       return;
     }
 
@@ -43,9 +50,10 @@ function App() {
     setSuccess('Job added successfully!');
     companyRef.current.focus();
 
-    setTimeout(() =>{
+    clearTimeout(successTimeoutRef.current);
+    successTimeoutRef.current = setTimeout(() => {
       setSuccess('');
-    }, 2000)
+    }, 2000);
   }
 
      const deleteJob = (id) => {
@@ -88,13 +96,14 @@ function App() {
       <button onClick={addJob}>Add Job</button>
       
     </div>
-    {error && <p className='error'>{error}</p>}
-    {success && <p className='success'>{success}</p>}
+
     <JobList
       jobs={jobs}
       deleteJob={deleteJob}
       updateStatus={updateStatus}
     />
+    <p className={`error ${error ? "show" : ""}`}>{error}</p>
+    <p className={`success ${success ? "show" : ""}`}>{success}</p>
   </div>
 );
 
