@@ -16,23 +16,57 @@ function App() {
   const errorTimeoutRef = useRef(null);
   const successTimeoutRef = useRef(null);
   const companyRef = useRef(null);
+  
+
   useEffect(() => {localStorage.setItem("jobs", JSON.stringify(jobs));},[jobs]);
   useEffect(() =>{
     companyRef.current.focus();
   },[]);
 
   const addJob = () => {
-    if (!company.trim() || !position.trim()) {
-      setError('All fields must be completed!');
-      setSuccess('');
+    const textOnlyRegex = /^[A-Za-z\s]+$/;
 
-      clearTimeout(errorTimeoutRef.current);
+  const isCompanyEmpty = !company.trim();
+  const isPositionEmpty = !position.trim();
 
-      errorTimeoutRef.current = setTimeout(() => {
-        setError('');
-      },2000);
-      return;
-    }
+  const isCompanyInvalid = company.trim() && !textOnlyRegex.test(company);
+  const isPositionInvalid = position.trim() && !textOnlyRegex.test(position);
+
+  // empty fields
+  if (isCompanyEmpty || isPositionEmpty) {
+    setError("All fields must be completed!");
+    setSuccess("");
+    clearTimeout(errorTimeoutRef.current);
+    errorTimeoutRef.current = setTimeout(() => setError(""), 2000);
+    return;
+  }
+
+  // both invalid
+  if (isCompanyInvalid && isPositionInvalid) {
+    setError("Company and position cannot contain numbers or special characters.");
+    setSuccess("");
+    clearTimeout(errorTimeoutRef.current);
+    errorTimeoutRef.current = setTimeout(() => setError(""), 2000);
+    return;
+  }
+
+  // only company invalid
+  if (isCompanyInvalid) {
+    setError("Company name cannot contain numbers or special characters.");
+    setSuccess("");
+    clearTimeout(errorTimeoutRef.current);
+    errorTimeoutRef.current = setTimeout(() => setError(""), 2000);
+    return;
+  }
+
+  // only position invalid
+  if (isPositionInvalid) {
+    setError("Position cannot contain numbers or special characters.");
+    setSuccess("");
+    clearTimeout(errorTimeoutRef.current);
+    errorTimeoutRef.current = setTimeout(() => setError(""), 2000);
+    return;
+  }
 
     const newJob = {
       id: Date.now(),
