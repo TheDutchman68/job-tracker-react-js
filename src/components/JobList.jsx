@@ -1,6 +1,6 @@
 import JobItem from "./JobItem";
 
-function JobList({ jobs, deleteJob, updateStatus }) {
+function JobList({ jobs = [], deleteJob, updateStatus }) {
   return (
     <ul>
       {jobs.map((job) => (

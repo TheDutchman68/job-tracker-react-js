@@ -2,10 +2,12 @@ import { useState, useEffect, useRef } from 'react';
 import JobList from "./components/JobList";
 import Login from './pages/Login';
 import Register from './pages/Register';
-
+import Header from "./components/Header";
 
 function App() {
-  const [isAuth, setIsAuth] = useState(!!localStorage.getItem('token'));
+  const [isAuth, setIsAuth] = useState(!!localStorage.getItem("token"));
+  const [showRegister, setShowRegister] = useState(false);
+
   const [company, setCompany] = useState('');
   const [position, setPosition] = useState('');
   const [status, setStatus] = useState('applied');
@@ -148,19 +150,20 @@ function App() {
       console.log(error);
       }
 };
+  
   if (!isAuth) {
-  return <Login setIsAuth={setIsAuth} />;
+  return showRegister ? (
+    <Register setShowRegister={setShowRegister} />
+  ) : (
+    <Login setIsAuth={setIsAuth} setShowRegister={setShowRegister} />
+  );
 }
 
-  const logout = () => {
-  localStorage.removeItem('token');
-  setIsAuth(false);
-};
   return (
     
   <div className="app">
+    <Header setIsAuth={setIsAuth} />
     <h1>Job Tracker</h1>
-
     <div className="form">
       <input
         ref={companyRef}
@@ -195,7 +198,6 @@ function App() {
     />
     <p className={`error ${error ? "show" : ""}`}>{error}</p>
     <p className={`success ${success ? "show" : ""}`}>{success}</p>
-    <button onClick={logout}>Logout</button>
   </div>
 );
 

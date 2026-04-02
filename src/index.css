@@ -2,15 +2,9 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: system-ui, sans-serif;
-  background: #f5f7fa;
-  padding: 40px;
-}
-
 .app {
   max-width: 600px;
-  margin: auto;
+  margin: 80px auto;
   background: white;
   padding: 24px;
   border-radius: 10px;
@@ -40,6 +34,10 @@ h1 {
   border: none;
   border-radius: 6px;
   cursor: pointer;
+}
+
+.form button:hover{
+  background-color: ;
 }
 
 /* JOB LIST */
@@ -87,6 +85,11 @@ ul {
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  transition: background 0.3s;
+}
+
+.job-actions button:hover{
+  background: #c53030;
 }
 
 .error{
