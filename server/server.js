@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
+import jobRoutes from './routes/jobs.js';
 
 dotenv.config();
 
@@ -22,5 +23,8 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
+
+
 app.use(express.json());
 app.use('/api/users', authRoutes);
+app.use('/api/jobs', jobRoutes);
