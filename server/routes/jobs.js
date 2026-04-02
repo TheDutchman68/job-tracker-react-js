@@ -1,8 +1,10 @@
 import express from 'express';
 import Job from '../models/Job.js';
+import authMiddleware from '../middleware/auth.js';
 
 const router = express.Router();
 
+router.use(authMiddleware);
 
 router.get('/', async (req, res) => {
   try {
