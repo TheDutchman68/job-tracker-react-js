@@ -5,7 +5,7 @@ function JobList({ jobs, deleteJob, updateStatus }) {
     <ul>
       {jobs.map((job) => (
         <JobItem
-          key={job._id}
+          key={job._id || job.id}
           job={job}
           deleteJob={deleteJob}
           updateStatus={updateStatus}

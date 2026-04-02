@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import JobList from "./components/JobList";
-
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 
 function App() {
-  
+  const [isAuth, setIsAuth] = useState(!!localStorage.getItem('token'));
   const [company, setCompany] = useState('');
   const [position, setPosition] = useState('');
   const [status, setStatus] = useState('applied');
@@ -15,11 +16,10 @@ function App() {
   const companyRef = useRef(null);
   const [jobs, setJobs] = useState([]);
   
-  useEffect(() =>{
-    companyRef.current.focus();
-  },[]);
-
+  
   useEffect(() => {
+  if (!isAuth) return;
+
   const fetchJobs = async () => {
     try {
       const response = await fetch('http://localhost:5001/api/jobs', {
@@ -36,7 +36,7 @@ function App() {
   };
 
   fetchJobs();
-}, []);
+}, [isAuth]);
 
 
   const addJob = async () => {
@@ -96,7 +96,7 @@ function App() {
 
     const data = await response.json();
 
-    setJobs([...jobs, data.data]); // 🔥 vine din backend
+    setJobs([...jobs, data.data]);
     
     setCompany('');
     setPosition('');
@@ -148,9 +148,16 @@ function App() {
       console.log(error);
       }
 };
+  if (!isAuth) {
+  return <Login setIsAuth={setIsAuth} />;
+}
 
-    
+  const logout = () => {
+  localStorage.removeItem('token');
+  setIsAuth(false);
+};
   return (
+    
   <div className="app">
     <h1>Job Tracker</h1>
 
@@ -188,6 +195,7 @@ function App() {
     />
     <p className={`error ${error ? "show" : ""}`}>{error}</p>
     <p className={`success ${success ? "show" : ""}`}>{success}</p>
+    <button onClick={logout}>Logout</button>
   </div>
 );
 
