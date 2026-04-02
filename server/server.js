@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import jobRoutes from './routes/jobs.js';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -26,5 +27,6 @@ app.listen(PORT, () => {
 
 
 app.use(express.json());
+app.use(cors());
 app.use('/api/users', authRoutes);
 app.use('/api/jobs', jobRoutes);

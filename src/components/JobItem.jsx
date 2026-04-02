@@ -8,7 +8,7 @@ function JobItem({ job, deleteJob, updateStatus }) {
     setIsRemoving(true);
 
     setTimeout(() => {
-      deleteJob(job.id);
+      deleteJob(job._id);
     }, 300)
   }
 
@@ -23,7 +23,7 @@ function JobItem({ job, deleteJob, updateStatus }) {
       <div className="job-actions">
         <select
           value={job.status}
-          onChange={(e) => updateStatus(job.id, e.target.value)}
+          onChange={(e) => updateStatus(job._id, e.target.value)}
         >
           <option value="applied">Applied</option>
           <option value="interview">Interview</option>

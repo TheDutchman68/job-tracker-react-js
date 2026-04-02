@@ -4,10 +4,7 @@ import JobList from "./components/JobList";
 
 
 function App() {
-  const [jobs, setJobs] = useState(() => {
-    const savedJobs = localStorage.getItem("jobs");
-    return savedJobs ? JSON.parse(savedJobs) : [];
-  });
+  
   const [company, setCompany] = useState('');
   const [position, setPosition] = useState('');
   const [status, setStatus] = useState('applied');
@@ -16,14 +13,33 @@ function App() {
   const errorTimeoutRef = useRef(null);
   const successTimeoutRef = useRef(null);
   const companyRef = useRef(null);
+  const [jobs, setJobs] = useState([]);
   
-
-  useEffect(() => {localStorage.setItem("jobs", JSON.stringify(jobs));},[jobs]);
   useEffect(() =>{
     companyRef.current.focus();
   },[]);
 
-  const addJob = () => {
+  useEffect(() => {
+  const fetchJobs = async () => {
+    try {
+      const response = await fetch('http://localhost:5001/api/jobs', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+
+      const data = await response.json();
+      setJobs(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  fetchJobs();
+}, []);
+
+
+  const addJob = async () => {
     const textOnlyRegex = /^[A-Za-z\s]+$/;
 
   const isCompanyEmpty = !company.trim();
@@ -68,36 +84,70 @@ function App() {
     return;
   }
 
-    const newJob = {
-      id: Date.now(),
-      company,
-      position,
-      status,
-    };
+    try {
+    const response = await fetch('http://localhost:5001/api/jobs', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({ company, position, status }),
+    });
 
-    setJobs([...jobs, newJob]);
+    const data = await response.json();
 
+    setJobs([...jobs, data.data]); // 🔥 vine din backend
+    
     setCompany('');
     setPosition('');
     setStatus('applied');
     setError('');
     setSuccess('Job added successfully!');
     companyRef.current.focus();
-
     clearTimeout(successTimeoutRef.current);
     successTimeoutRef.current = setTimeout(() => {
       setSuccess('');
     }, 2000);
+  }catch(error) {
+    console.log(error)
   }
 
-     const deleteJob = (id) => {
-      setJobs(jobs.filter((job) => job.id !== id));
-    }
+  }
 
-    const updateStatus = (id, newStatus) => {
+    const deleteJob = async (id) => {
+       try {
+      await fetch(`http://localhost:5001/api/jobs/${id}`, {
+        method: 'DELETE',
+        headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
 
-      setJobs(jobs.map((job) => job.id === id ? { ...job, status: newStatus} : job ));
-    };
+        setJobs(jobs.filter((job) => job._id !== id));
+      } catch (error) {
+        console.log(error);
+  }
+};  
+
+
+      const updateStatus = async (id, newStatus) => {
+      try {
+        const response = await fetch(`http://localhost:5001/api/jobs/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      const data = await response.json();
+
+      setJobs(jobs.map((job) =>job._id === id ? data.data : job));
+      } catch (error) {
+      console.log(error);
+      }
+};
 
     
   return (
