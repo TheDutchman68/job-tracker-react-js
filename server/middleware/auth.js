@@ -12,7 +12,7 @@ const authMiddleware = (req, res, next) => {
 
 
         // We extract the token
-        const token = authHeader.split('')[1];
+        const token = authHeader.split(' ')[1];
 
 
         // We verify the token
