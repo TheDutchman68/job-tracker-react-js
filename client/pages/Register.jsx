@@ -7,7 +7,7 @@ function Register({ setShowRegister }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const validateName = (name) => {
     const regex = /^[A-Za-z\s]{2,50}$/; 
@@ -49,7 +49,7 @@ function Register({ setShowRegister }) {
     }
 
     try {
-      const res = await fetch("http://localhost:5001/api/users/register", {
+      const res = await fetch(`${API_URL}/api/users/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),

@@ -5,6 +5,7 @@ function Login({ setIsAuth, setShowRegister }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const handleLogin = async () => {
 
@@ -26,7 +27,7 @@ function Login({ setIsAuth, setShowRegister }) {
     }
 
     try {
-      const res = await fetch("http://localhost:5001/api/users/login", {
+      const res = await fetch(`${API_URL}/api/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

@@ -17,14 +17,14 @@ function App() {
   const successTimeoutRef = useRef(null);
   const companyRef = useRef(null);
   const [jobs, setJobs] = useState([]);
-  
+  const API_URL = import.meta.env.VITE_API_URL;
   
   useEffect(() => {
   if (!isAuth) return;
 
   const fetchJobs = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/jobs', {
+      const response = await fetch(`${API_URL}/api/jobs`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -87,7 +87,7 @@ function App() {
   }
 
     try {
-    const response = await fetch('http://localhost:5001/api/jobs', {
+    const response = await fetch(`${API_URL}/api/jobs`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ function App() {
 
     const deleteJob = async (id) => {
        try {
-      await fetch(`http://localhost:5001/api/jobs/${id}`, {
+      await fetch(`${API_URL}/api/jobs/${id}`, {
         method: 'DELETE',
         headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -134,7 +134,7 @@ function App() {
 
       const updateStatus = async (id, newStatus) => {
       try {
-        const response = await fetch(`http://localhost:5001/api/jobs/${id}`, {
+        const response = await fetch(`${API_URL}/api/jobs/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
