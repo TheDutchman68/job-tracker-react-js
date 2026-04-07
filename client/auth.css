@@ -74,11 +74,42 @@ body {
   color: #1e4bb8;
 }
 
-.error-msg {
-  color: #ff2d00;
+/* ERROR BOX */
+.error-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffe5e5;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  padding: 10px 12px;
+  border-radius: 8px;
   margin-bottom: 16px;
-  font-weight: 600;
   font-size: 0.95rem;
+  font-weight: 500;
+  animation: fadeSlide 0.3s ease;
+}
+
+
+.error-icon {
+  font-size: 1.1rem;
+}
+
+
+.auth-container input.error {
+  border: 1px solid #ef4444;
+  background: #fff5f5;
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .success-msg {
@@ -102,3 +133,4 @@ body {
 .logout-btn:hover {
   background: #363636;
 }
+

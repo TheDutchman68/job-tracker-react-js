@@ -1,11 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 function Login({ setIsAuth, setShowRegister }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const API_URL = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+  if (!error) return;
+
+  const timer = setTimeout(() => {
+    setError("");
+  }, 3000);
+
+  return () => clearTimeout(timer);
+}, [error]);
 
   const handleLogin = async () => {
 
@@ -26,6 +37,10 @@ function Login({ setIsAuth, setShowRegister }) {
       return;
     }
 
+      setLoading(true);
+      setError("");
+      
+
     try {
       const res = await fetch(`${API_URL}/api/users/login`, {
         method: "POST",
@@ -33,19 +48,30 @@ function Login({ setIsAuth, setShowRegister }) {
         body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
-      if (!data.success) return setError(data.message);
+      if (!data.success) {
+        setError(data.message);
+        setLoading(false);
+        return; 
+      }
+    
 
       localStorage.setItem("token", data.data.token);
       setIsAuth(true);
+
     } catch (error) {
       setError("Login failed, try again");
+      setLoading(false);
     }
   };
 
   return (
     <div className="auth-container">
       <h2>Login</h2>
-      {error && <p className="error-msg">{error}</p>}
+      {error && 
+      (<div className="error-box">
+        <span className="error-icon">⚠️</span>
+        <span>{error}</span>
+      </div>)}
       <input
         type="email"
         placeholder="Email"
@@ -58,7 +84,9 @@ function Login({ setIsAuth, setShowRegister }) {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleLogin}>Login</button>
+      <button onClick={handleLogin} disabled={loading}>
+        {loading ? (<><span className="spinner"></span> Logging in...</>):("Login")}
+      </button>
       <p> Don't have an account?{" "}  
         <a href="#"onClick={(e) => { e.preventDefault(); setShowRegister(true);}}>
           Register

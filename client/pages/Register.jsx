@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 function Register({ setShowRegister }) {
@@ -7,7 +7,19 @@ function Register({ setShowRegister }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
   const API_URL = import.meta.env.VITE_API_URL;
+
+
+    useEffect(() => {
+    if (!error) return;
+  
+    const timer = setTimeout(() => {
+      setError("");
+    }, 3000);
+  
+    return () => clearTimeout(timer);
+  }, [error]);
 
   const validateName = (name) => {
     const regex = /^[A-Za-z\s]{2,50}$/; 
@@ -47,6 +59,8 @@ function Register({ setShowRegister }) {
       setSuccess("");
       return;
     }
+      setLoading(true);
+      setError("");
 
     try {
       const res = await fetch(`${API_URL}/api/users/register`, {
@@ -55,7 +69,12 @@ function Register({ setShowRegister }) {
         body: JSON.stringify({ name, email, password }),
       });
       const data = await res.json();
-      if (!data.success) return setError(data.message);
+      if (!data.success){
+        setError(data.message);
+        setLoading(false);
+        return; 
+      } 
+      
 
       setSuccess("User created! You can now login");
       setError("");
@@ -63,33 +82,42 @@ function Register({ setShowRegister }) {
     } catch (error) {
       setError("Registration failed");
       setSuccess("");
+      setLoading(false);
     }
   };
 
   return (
     <div className="auth-container">
       <h2>Register</h2>
-      {error && <p className="error-msg">{error}</p>}
+            {error && 
+      (<div className="error-box">
+        <span className="error-icon">⚠️</span>
+        <span>{error}</span>
+      </div>)}
       {success && <p className="success-msg">{success}</p>}
         <input
+        disabled={loading}
         type="text"
         placeholder="Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
       <input
+        disabled={loading}
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <input
+        disabled={loading}
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleRegister}>Register</button>
+      <button onClick={handleRegister} disabled={loading}>
+        {loading ?(<><span className="spinner"></span> Registering... </>):("Register")}</button>
       <p>
         Already have an account? {" "}
         <a href="#" onClick={() => setShowRegister(false)}>Login</a>
