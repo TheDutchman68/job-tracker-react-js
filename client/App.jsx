@@ -161,10 +161,9 @@ function App() {
 
   return (
     
-  <div className="app">
+  <div className="job-app">
     <Header setIsAuth={setIsAuth} />
-    <h1>Job Tracker</h1>
-    <div className="form">
+    <div className="job-form">
       <input
         ref={companyRef}
         type="text"
@@ -196,8 +195,8 @@ function App() {
       deleteJob={deleteJob}
       updateStatus={updateStatus}
     />
-    <p className={`error ${error ? "show" : ""}`}>{error}</p>
-    <p className={`success ${success ? "show" : ""}`}>{success}</p>
+    <p className={`job-error ${error ? "show" : ""}`}>{error}</p>
+    <p className={`job-success ${success ? "show" : ""}`}>{success}</p>
   </div>
 );
 

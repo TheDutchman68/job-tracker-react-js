@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 body {
   font-family: system-ui, sans-serif;
   background: #f5f7fa;
@@ -6,8 +9,8 @@ body {
 }
 
 .auth-container {
-  max-width: 400px;
-  margin: 80px auto;
+  max-width: 500px;
+  margin: 50px auto;
   padding: 40px 32px;
   background: #ffffff;
   border-radius: 12px;
@@ -74,7 +77,7 @@ body {
   color: #1e4bb8;
 }
 
-/* ERROR BOX */
+
 .error-box {
   display: flex;
   align-items: center;
@@ -133,4 +136,91 @@ body {
 .logout-btn:hover {
   background: #363636;
 }
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid white;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .auth-container {
+    max-width: 90%;
+    margin: 20px auto;
+    padding: 32px 24px;
+  }
+
+  .auth-container h2 {
+    font-size: 1.6rem;
+  }
+
+  .auth-container input {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+
+  .auth-container button {
+    padding: 13px;
+    font-size: 0.95rem;
+  }
+
+  .error-box {
+    font-size: 0.9rem;
+  }
+}
+
+
+
+@media (max-width: 480px) {
+  .auth-container {
+    max-width: 95%;
+    margin: 12px auto;
+    padding: 28px 20px;
+    border-radius: 10px;
+  }
+
+  .auth-container h2 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+
+  .auth-container input {
+    padding: 12px;
+    font-size: 0.95rem;
+    margin-bottom: 14px;
+  }
+
+  .auth-container button {
+    padding: 14px;
+    font-size: 1rem;
+    border-radius: 10px;
+  }
+
+  .switch-auth {
+    font-size: 0.9rem;
+  }
+
+  .error-box {
+    font-size: 0.85rem;
+    padding: 8px 10px;
+  }
+
+  .spinner {
+    width: 14px;
+    height: 14px;
+  }
+}
+
 

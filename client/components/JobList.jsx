@@ -2,7 +2,7 @@ import JobItem from "./JobItem";
 
 function JobList({ jobs = [], deleteJob, updateStatus }) {
   return (
-    <ul>
+    <job-list>
       {jobs.map((job) => (
         <JobItem
           key={job._id || job.id}
@@ -11,7 +11,7 @@ function JobList({ jobs = [], deleteJob, updateStatus }) {
           updateStatus={updateStatus}
         />
       ))}
-    </ul>
+    </job-list>
   );
 }
 
