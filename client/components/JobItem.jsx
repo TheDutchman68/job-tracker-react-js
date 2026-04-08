@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-function JobItem({ job, deleteJob, updateStatus }) {
+function JobItem({ job, deleteJob, updateStatus, deletingId }) {
 
   const [isRemoving, setIsRemoving] = useState(false);
-
+  const isDeleting = deletingId === job._id;
   const handleDelete = () => {
     setIsRemoving(true);
 
@@ -21,17 +21,14 @@ function JobItem({ job, deleteJob, updateStatus }) {
       </div>
 
       <div className="job-actions">
-        <select
-          value={job.status}
-          onChange={(e) => updateStatus(job._id, e.target.value)}
-        >
+        <select value={job.status} onChange={(e) => updateStatus(job._id, e.target.value)}>
           <option value="applied">Applied</option>
           <option value="interview">Interview</option>
           <option value="rejected">Rejected</option>
         </select>
 
-        <button onClick={handleDelete}>
-          Delete
+        <button onClick={handleDelete} disabled={isDeleting}>
+          {isDeleting ? (<><span className="spinner"></span> Deleting...</>) : ("Delete")}
         </button>
       </div>
     </li>

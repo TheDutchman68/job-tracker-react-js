@@ -7,7 +7,8 @@ import Header from "./components/Header";
 function App() {
   const [isAuth, setIsAuth] = useState(!!localStorage.getItem("token"));
   const [showRegister, setShowRegister] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
   const [company, setCompany] = useState('');
   const [position, setPosition] = useState('');
   const [status, setStatus] = useState('applied');
@@ -86,6 +87,8 @@ function App() {
     return;
   }
 
+    setLoading(true);
+
     try {
     const response = await fetch(`${API_URL}/api/jobs`, {
       method: 'POST',
@@ -111,12 +114,15 @@ function App() {
       setSuccess('');
     }, 2000);
   }catch(error) {
-    console.log(error)
+    setError("Something went wrong")
+  } finally{
+    setLoading(false);
   }
 
   }
 
     const deleteJob = async (id) => {
+        setDeletingId(id);
        try {
       await fetch(`${API_URL}/api/jobs/${id}`, {
         method: 'DELETE',
@@ -128,7 +134,9 @@ function App() {
         setJobs(jobs.filter((job) => job._id !== id));
       } catch (error) {
         console.log(error);
-  }
+      } finally{
+        setDeletingId(null);
+      }
 };  
 
 
@@ -165,6 +173,7 @@ function App() {
     <Header setIsAuth={setIsAuth} />
     <div className="job-form">
       <input
+        disabled={loading}
         ref={companyRef}
         type="text"
         placeholder="Company"
@@ -174,6 +183,7 @@ function App() {
       />
 
       <input
+        disabled={loading}
         type="text"
         placeholder="Position"
         value={position}
@@ -186,7 +196,7 @@ function App() {
         <option value="rejected">Rejected</option>
       </select>
 
-      <button onClick={addJob}>Add Job</button>
+      <button onClick={addJob} disabled={loading}>{loading ? (<><span className="spinner"></span> Adding...</>):("Add job")}</button>
       
     </div>
 
@@ -194,6 +204,7 @@ function App() {
       jobs={jobs}
       deleteJob={deleteJob}
       updateStatus={updateStatus}
+      deletingId={deletingId}
     />
     <p className={`job-error ${error ? "show" : ""}`}>{error}</p>
     <p className={`job-success ${success ? "show" : ""}`}>{success}</p>

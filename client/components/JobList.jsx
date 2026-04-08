@@ -1,6 +1,6 @@
 import JobItem from "./JobItem";
 
-function JobList({ jobs = [], deleteJob, updateStatus }) {
+function JobList({ jobs = [], deleteJob, updateStatus, deletingId }) {
   return (
     <job-list>
       {jobs.map((job) => (
@@ -9,6 +9,7 @@ function JobList({ jobs = [], deleteJob, updateStatus }) {
           job={job}
           deleteJob={deleteJob}
           updateStatus={updateStatus}
+          deletingId={deletingId}
         />
       ))}
     </job-list>
