@@ -286,17 +286,12 @@
 
   .job-header {
     flex-direction: column;
-    align-items: flex-start;
     gap: 10px;
   }
-
+  
   .job-header .logout-btn {
     width: 100%;
     font-size: 18px;
-  }
-
-  .job-form {
-    grid-template-columns: 1fr;
   }
 
   .job-item {
