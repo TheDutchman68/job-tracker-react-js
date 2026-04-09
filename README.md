@@ -1,7 +1,8 @@
-# 📌 Job Tracker App
+# 📌 Job Tracker App (Full Stack)
 
-A modern and responsive **Job Application Tracker** built with **React**.  
-This application helps users keep track of their job applications by adding, updating, and deleting job entries, with data persisted in the browser using `localStorage`.
+A modern and fully responsive **Job Application Tracker** built with a **full-stack architecture** using **React, Node.js, Express, and MongoDB.**
+
+This application allows users to manage their job applications efficiently, with authentication, persistent storage in a database, and real-time UI feedback.
 
 ---
 
@@ -13,24 +14,57 @@ https://job-tracker-react-js-bice.vercel.app
 
 ## ✨ Features
 
+### 🔐 Authentication
+
+- User registration & login (JWT-based authentication)
+- Protected routes (only authenticated users can access jobs)
+- Protected routes (only authenticated users can access jobs)
+
+### 📋 Job Management (CRUD)
+
 - Add job applications (company, position, status)
-- Update job application status (Applied / Interview / Rejected)
+- Update job status (Applied / Interview / Rejected)
 - Delete job entries
-- Form validation with user feedback
+- Each user sees only their own jobs
+
+### ⚡ UX Improvements
+
+- Loading spinner when adding jobs
+- Deleting state (visual feedback when removing jobs)
+- Disabled inputs during API calls
 - Success and error messages with smooth animations
-- Persistent data storage using `localStorage`
-- Fully responsive design (desktop, tablet, mobile)
-- Clean and intuitive user interface
+- Auto-focus on inputs for better flow
+
+### 🔍 Backend Features
+- RESTful API (Express)
+- MongoDB database with Mongoose
+- Filtering by status
+- Search by position (regex, case-insensitive)
+
+### 📱 Responsive Design
+- Fully responsive layout (desktop, tablet, mobile)
+- Modern UI inspired by job tracking tools
+- Clean card-based layout with smooth hover effects
 
 ---
 
 ## 🛠 Tech Stack
 
-- React (Hooks: `useState`, `useEffect`)
-- JavaScript (ES6+)
-- CSS3 (Flexbox, Media Queries)
+### Frontend
+- React (Hooks: useState, useEffect, useRef)
 - Vite
+- CSS3 (Grid, Flexbox, Media Queries)
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB + Mongoose
+- JWT (Authentication)
+
+### Tools
 - Git & GitHub
+- Vercel (Frontend Deployment)
+- Render (Backend Deployment)
 
 ---
 
@@ -48,6 +82,9 @@ cd job-tracker
 # Install dependencies
 npm install
 
+# Create a `.env` file in the project root and add:
+VITE_API_URL=https://job-tracker-react-js-1.onrender.com
+
 # Start development server
 npm run dev
 
@@ -55,44 +92,69 @@ npm run dev
 http://localhost:5173
 ```
 
+## 📡 API Endpoints
+
+### Auth
+- POST /api/auth/register
+- POST /api/auth/login
+
+### Jobs
+- GET /api/jobs → get user jobs
+- POST /api/jobs → create job
+- PATCH /api/jobs/:id → update status
+- DELETE /api/jobs/:id → delete job
+
 ## 🧠 What I Learned
 
-- Structuring a React project using reusable components
-- Managing application state with useState
-- Handling side effects and persistence using useEffect
-- Implementing CRUD functionality in React
-- Form validation and UX feedback handling
-- Persisting data in localStorage
-- Creating responsive layouts using CSS media queries
-- Improving user experience with feedback messages
-- Writing clean, readable, and maintainable React code
+- Building a full-stack application from scratch
+- Creating REST APIs with Express
+- Working with MongoDB & Mongoose schemas
+- Implementing JWT authentication
+- Managing protected routes and tokens
+- Handling async operations with loading states
+- Improving UX with feedback (spinners, animations)
+- Structuring scalable React applications
+- Connecting frontend with backend APIs
+- Writing clean, maintainable, and modular code
 - Using Git and GitHub for version control and feature-based commits
 
 ## 🔮 Possible Improvements
 
-- Add authentication (login/register)
-- Add filtering and search functionality
-- Add backend support (Node.js + MongoDB)
-- Cloud-based data storage
-- Dark mode
-- Export data to CSV
+- Search & filter UI (already supported in backend)
+- Pagination / infinite scroll
+- Dashboard with stats (applied / interview / rejected)
+- Drag & drop (kanban style like Teal)
+- Dark mode 🌙
+- Email reminders for applications
 
 
 
 
 ## 📸 Screenshots
 
-### Desktop
-![Desktop Screenshot](./screenshots/Desktop1.png)
-![Desktop Screenshot](/screenshots/Desktop2.png)
+### Desktop Auth
+![Desktop Screenshot](./screenshots/Desktop%20Auth%20Login.png)
+![Desktop Screenshot](/screenshots/Desktop%20Auth%20Register.png)
 
-### Tablet
-![Tablet Screenshot](./screenshots/Tablet1.png)
-![Tablet Screenshot](./screenshots/Tablet2.png)
+### Desktop 
+![Desktop Screenshot](./screenshots/Desktop%201.png)
+![Desktop Screenshot](/screenshots/Desktop%202.png)
+
+### Tablet Auth 
+![Tablet Screenshot](./screenshots/Tablet%20Auth%20Login.png)
+![Tablet Screenshot](./screenshots/Tablet%20Auth%20Register.png)
+
+### Tablet  
+![Tablet Screenshot](./screenshots/Tablet%201.png)
+![Tablet Screenshot](./screenshots/Tablet%202.png)
+
+### Mobile Auth
+![Mobile Screenshot](./screenshots/Mobile%20Auth%20Login.png)
+![Mobile Screenshot](./screenshots/Mobile%20Auth%20Register.png)
 
 ### Mobile
-![Mobile Screenshot](./screenshots/Mobile1.png)
-![Mobile Screenshot](./screenshots/Mobile2.png)
+![Mobile Screenshot](./screenshots/Mobile%201.png)
+![Mobile Screenshot](./screenshots/Mobile%202.png)
 
 ## ⚠️ Note 
 - Native form elements may appear slightly different across browsers (Safari vs Chrome), which is expected behavior.
